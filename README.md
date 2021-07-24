@@ -2,6 +2,7 @@
 <br>
 
 此專案為一個短網址產生器的網路應用程式。
+HEROKU 連結: https://pure-wave-67365.herokuapp.com/
 
 ## 產品功能
 
