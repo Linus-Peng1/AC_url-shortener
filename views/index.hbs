@@ -11,7 +11,7 @@
           <div class="row">
             <input type="url" name="fullURL" id="fullURL" placeholder="URL..." value="{{full}}" required>
             <div class="col align-self-center">
-              <button type="submit" class="btn btn-primary col-6 mt-3">Shorten</button>
+              <button type="submit" class="btn btn-outline-primary col-6 mt-3">Shorten</button>
             </div>
           </div>
         </form>
@@ -19,7 +19,7 @@
         {{#if short}}
         <div class="my-3">
           <h3>Sucess! Please use this link:</h3>
-          <a href="/{{short}}">{{short}}</a>
+          <a href="/{{short}}" id="short-url">{{short}}</a>
         </div>
         {{/if}}
 
