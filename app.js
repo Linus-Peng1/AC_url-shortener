@@ -21,9 +21,28 @@ app.get('/', (req, res) => {
 
 app.post('/shortURL', (req, res) => {
   const full = req.body.fullURL
-  const short = shortUrlGenerate(5)
+  let short = ''
 
-  return ShortUrl.create({ full, short })
+  ShortUrl.find()
+    .lean()
+    .then(allUrls => {
+
+      // 檢查輸入網址是否已存在
+      existUrl = allUrls.filter(eachUrl => {
+        return eachUrl.full === full
+      })
+      if (existUrl.length === 1) {
+        short = allUrls[0].short
+      } else {
+        short = shortUrlGenerate(5)
+
+        // 檢查 short-URL 是否已存在
+        while (allUrls.some(eachUrl => eachUrl.short === short)) {
+          short = shortUrlGenerate(5)
+        }
+        return ShortUrl.create({ full, short })
+      }
+    })
     .then(() => res.render('index', { full, short }))
     .catch(error => console.log(error))
 })
