@@ -19,12 +19,24 @@ app.get('/', (req, res) => {
 })
 
 app.post('/shortURL', (req, res) => {
-  const fullUrl = req.body.fullURL
-  const shortUrl = '12345'
+  const full = req.body.fullURL
+  const short = '1a2a3'
 
-  return ShortUrl.create({ full: fullUrl, short: shortUrl })
-    .then(() => res.redirect('/'))
+  return ShortUrl.create({ full, short })
+    .then(() => res.render('index', { full, short }))
     .catch(error => console.log(error))
+})
+
+app.get('/:short', (req, res) => {
+  ShortUrl.find({ short: req.params.short })
+    .lean()
+    .then(shortUrl => {
+      if (shortUrl.length === 0) {
+        res.redirect('/')
+      } else {
+        res.redirect(shortUrl[0].full)
+      }
+    })
 })
 
 app.listen(port, () => {
