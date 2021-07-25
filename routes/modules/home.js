@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 
 router.post('/shortURL', (req, res) => {
   const full = req.body.fullURL
+  let hostUrl = req.headers.host
   let short = ''
 
   ShortUrl.find()
@@ -31,7 +32,18 @@ router.post('/shortURL', (req, res) => {
         return ShortUrl.create({ full, short })
       }
     })
-    .then(() => res.render('index', { full, short }))
+    .then(() => {
+
+      // 產生短網址
+      if (hostUrl === 'localhost:3000') {
+        hostUrl = 'http://' + hostUrl + '/' + short
+      } else {
+        hostUrl = 'https://' + hostUrl + '/' + short
+      }
+
+      // render index
+      res.render('index', { full, short, hostUrl })
+    })
     .catch(error => console.log(error))
 })
 
