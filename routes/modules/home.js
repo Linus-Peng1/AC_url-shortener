@@ -18,11 +18,9 @@ router.post('/shortURL', (req, res) => {
     .then(allUrls => {
 
       // 檢查輸入網址是否已存在
-      existUrl = allUrls.filter(eachUrl => {
-        return eachUrl.full === full
-      })
+      existUrl = allUrls.filter(eachUrl => eachUrl.full === full)
       if (existUrl.length === 1) {
-        short = allUrls[0].short
+        short = existUrl[0].short
       } else {
         short = shortUrlGenerate(5)
 
