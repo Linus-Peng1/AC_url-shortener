@@ -8,6 +8,7 @@ require('./config/mongoose')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(express.static('public'))
 app.engine('hbs', exphbs({ defaultLayput: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
